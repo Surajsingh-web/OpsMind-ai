@@ -38,11 +38,16 @@ const Login = () => {
           {letters.map((letter, index) => (
             <span
               key={index}
-              className="
-                inline-block text-transparent bg-clip-text
-                bg-gradient-to-r from-teal-300 via-cyan-300 to-fuchsia-400
-                glow-letter animate-slide-in relative
-              "
+             className="
+  inline-block text-transparent bg-clip-text
+  bg-[linear-gradient(90deg,#14f1d9,#00c6ff,#d946ef,#14f1d9)]
+  bg-[length:300%_300%]
+  animate-gradient-flow
+  hover:scale-110
+  transition-transform duration-300
+  glow-letter animate-slide-in relative
+"
+
               style={{ animationDelay: `${index * 0.12}s` }}
             >
               {letter === " " ? "\u00A0" : letter}
@@ -53,53 +58,40 @@ const Login = () => {
 
         {/* Tagline */}
         <p className="
-          text-center text-sm font-medium
-          bg-clip-text text-transparent
-          bg-gradient-to-r from-teal-400 via-cyan-400 to-fuchsia-400
-          tracking-wide mb-10
-          drop-shadow-[0_0_12px_rgba(45,212,191,0.25)]
-        ">
+text-center text-sm font-medium
+bg-clip-text text-transparent
+bg-gradient-to-r from-teal-400 via-cyan-400 to-fuchsia-400
+tracking-wide mb-10
+drop-shadow-[0_0_12px_rgba(45,212,191,0.25)]
+hover:from-fuchsia-400 hover:via-cyan-300 hover:to-teal-300
+transition-all duration-500
+"
+>
           Context-Aware Corporate Knowledge Assistant
         </p>
 
         {/* Login Card */}
-        <div className="
-          bg-white/10 backdrop-blur-2xl
-          border border-white/15
-          rounded-2xl shadow-[0_0_40px_rgba(45,212,191,0.15)]
-          p-8 w-full max-w-md
-          hover:shadow-[0_0_60px_rgba(217,70,239,0.25)]
-          transition-all duration-500
-        ">
-          <LoginForm />
-        </div>
+       
+      <div className="login-card relative p-8 w-full max-w-md rounded-2xl backdrop-blur-3xl transition-all duration-500">
+  <LoginForm />
+</div>
+
       </div>
 
       {/* ===== ANIMATIONS ===== */}
       <style>{`
-        @keyframes slideIn {
-          0% { transform: translateY(-25px); opacity: 0; }
-          60% { transform: translateY(4px); opacity: 1; }
-          100% { transform: translateY(0); opacity: 1; }
-        }
+      @keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-        .animate-slide-in {
-          animation: slideIn 0.6s ease forwards;
-        }
+.animate-gradient-flow {
+  animation: gradientFlow 6s ease infinite;
+}
 
-        .glow-letter {
-          filter: drop-shadow(0 0 12px rgba(45,212,191,0.35));
-        }
 
-        @keyframes shine {
-          0% { transform: translateX(-120%); opacity: 0; }
-          50% { transform: translateX(0); opacity: 0.25; }
-          100% { transform: translateX(120%); opacity: 0; }
-        }
-
-        .animate-shine {
-          animation: shine 3.5s ease-in-out infinite;
-        }
+      
       `}</style>
     </div>
   );
