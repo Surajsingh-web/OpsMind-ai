@@ -3,95 +3,86 @@ import LoginForm from "../components/auth/LoginForm";
 
 const Login = () => {
   const productName = "OpsMind AI";
-  const [letters, setLetters] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const splitLetters = productName.split("");
-    let displayed = [];
-    let i = 0;
-
-    const interval = setInterval(() => {
-      displayed.push(splitLetters[i]);
-      setLetters([...displayed]);
-      i++;
-      if (i >= splitLetters.length) clearInterval(interval);
-    }, 120);
-
-    return () => clearInterval(interval);
+    setTimeout(() => setVisible(true), 300);
   }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#05070f] px-4">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0f1f] px-4">
 
-      {/* ===== CYBER BACKGROUND GLOW ===== */}
-      <div className="absolute inset-0">
-        <div className="absolute -top-1/3 -left-1/4 w-[900px] h-[900px] bg-teal-400/15 rounded-full blur-[220px]" />
-        <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] bg-fuchsia-500/15 rounded-full blur-[220px]" />
-        <div className="absolute bottom-[-40%] left-1/3 w-[1000px] h-[1000px] bg-cyan-400/10 rounded-full blur-[240px]" />
-      </div>
+      {/* ================= BACKGROUND GRADIENT ANIMATION ================= */}
+      <div className="absolute inset-0 animate-bgMove bg-[radial-gradient(circle_at_20%_30%,rgba(20,241,217,0.25),transparent_40%),radial-gradient(circle_at_80%_60%,rgba(217,70,239,0.25),transparent_40%)]" />
 
-      {/* ===== CONTENT ===== */}
-      <div className="relative z-10 flex flex-col items-center">
+      {/* ================= FLOATING PARTICLES ================= */}
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-2 h-2 bg-cyan-400/40 rounded-full animate-float"
+          style={{
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${i * 0.6}s`,
+          }}
+        />
+      ))}
 
-        {/* Product Name */}
-        <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-3 flex flex-wrap justify-center">
-          {letters.map((letter, index) => (
-            <span
-              key={index}
-             className="
-  inline-block text-transparent bg-clip-text
-  bg-[linear-gradient(90deg,#14f1d9,#00c6ff,#d946ef,#14f1d9)]
-  bg-[length:300%_300%]
-  animate-gradient-flow
-  hover:scale-110
-  transition-transform duration-300
-  glow-letter animate-slide-in relative
-"
+      {/* ================= CONTENT ================= */}
+      <div className="relative z-10 flex flex-col items-center w-full">
 
-              style={{ animationDelay: `${index * 0.12}s` }}
-            >
-              {letter === " " ? "\u00A0" : letter}
-              <span className="absolute inset-0 bg-white/20 opacity-0 animate-shine pointer-events-none" />
-            </span>
-          ))}
+        {/* LOGO / TITLE */}
+        <h1
+          className={`text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-fuchsia-500 mb-3 transition-all duration-1000 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          {productName}
         </h1>
 
-        {/* Tagline */}
-        <p className="
-text-center text-sm font-medium
-bg-clip-text text-transparent
-bg-gradient-to-r from-teal-400 via-cyan-400 to-fuchsia-400
-tracking-wide mb-10
-drop-shadow-[0_0_12px_rgba(45,212,191,0.25)]
-hover:from-fuchsia-400 hover:via-cyan-300 hover:to-teal-300
-transition-all duration-500
-"
->
+        {/* TAGLINE */}
+        <p className="text-slate-400 text-sm tracking-wide mb-10">
           Context-Aware Corporate Knowledge Assistant
         </p>
 
-        {/* Login Card */}
-       
-      <div className="login-card relative p-8 w-full max-w-md rounded-2xl backdrop-blur-3xl transition-all duration-500">
-  <LoginForm />
-</div>
-
+        {/* ================= LOGIN CARD ================= */}
+        <div
+          className={`
+          w-full max-w-md p-10 rounded-3xl
+          bg-white/5 backdrop-blur-2xl
+          border border-white/10
+          shadow-[0_0_40px_rgba(0,255,255,0.12)]
+          transition-all duration-700
+          hover:scale-[1.02]
+          ${visible ? "opacity-100" : "opacity-0"}
+        `}
+        >
+          <LoginForm />
+        </div>
       </div>
 
-      {/* ===== ANIMATIONS ===== */}
+      {/* ================= ANIMATIONS ================= */}
       <style>{`
-      @keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+        @keyframes bgMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
 
-.animate-gradient-flow {
-  animation: gradientFlow 6s ease infinite;
-}
+        .animate-bgMove {
+          background-size: 200% 200%;
+          animation: bgMove 15s ease infinite;
+        }
 
+        @keyframes float {
+          0% { transform: translateY(0px); opacity: 0.6; }
+          50% { transform: translateY(-25px); opacity: 1; }
+          100% { transform: translateY(0px); opacity: 0.6; }
+        }
 
-      
+        .animate-float {
+          animation: float 5s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
